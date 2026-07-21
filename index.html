@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>資料庫管理指揮台｜Jvision AI 產業管理系統 Demo</title>
+  <meta name="description" content="集中管理MES、ERP等系統背後的資料庫效能、備份與安全，確保資料庫穩定運作。" />
+  <link rel="stylesheet" href="./styles.css?v=industry-system-framework-sample-20260720-1373" />
+</head>
+<body class="theme-it-blueprint-1373">
+  <main class="system-shell">
+    <aside class="side-panel" aria-label="系統側邊欄">
+      <div class="brand-block">
+        <span>JVision</span>
+        <strong>IT Ops OS</strong>
+      </div>
+      <nav class="module-nav" aria-label="功能模組">
+        <button type="button" class="active" data-module="IT 總覽"><span>01</span>IT 總覽</button><button type="button" class="" data-module="服務台"><span>02</span>服務台</button><button type="button" class="" data-module="資安/權限"><span>03</span>資安/權限</button><button type="button" class="" data-module="AI 維運分析"><span>04</span>AI 維運分析</button>
+      </nav>
+      <section class="ops-summary">
+        <p>今日營運摘要</p>
+        <strong id="sidebarOpen">--</strong>
+        <span>待處理 IT 事件</span>
+        <button type="button" data-action="run-ai">產生 IT 建議</button>
+      </section>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">AI Empowered Industry System · Case SM-273</p>
+          <h1>資料庫管理指揮台</h1>
+          <span>智慧製造｜IT管理｜集中管理MES、ERP等系統背後的資料庫效能、備份與安全，確保資料庫穩定運作。</span>
+        </div>
+        <label class="global-search">
+          <span>搜尋</span>
+          <input id="searchInput" placeholder="搜尋系統、帳號、事件、設備或服務" />
+        </label>
+      </header>
+
+      <section class="kpi-grid" aria-label="即時統計">
+        <article><span>待處理</span><strong id="openCount">--</strong><small>需要團隊處理</small></article>
+        <article><span>高風險</span><strong id="riskCount">--</strong><small>AI 建議優先看</small></article>
+        <article><span>完成率</span><strong id="doneRate">--</strong><small>今日流程進度</small></article>
+        <article><span>服務風險</span><strong id="impactValue">--</strong><small>依風險與工時估算</small></article>
+      </section>
+
+      <section class="control-grid">
+        <article class="panel main-flow">
+          <div class="panel-heading">
+            <div>
+              <span>工作流程</span>
+              <h2>IT 事件狀態看板</h2>
+            </div>
+            <b id="queueLabel">--</b>
+          </div>
+          <div class="stage-board" id="stageBoard"></div>
+        </article>
+
+        <article class="panel ai-panel">
+          <div class="panel-heading">
+            <div>
+              <span>AI 賦能情境</span>
+              <h2>痛點與系統建議</h2>
+            </div>
+            <b>LIVE</b>
+          </div>
+          <div class="ai-story">
+            <p class="pain">傳統痛點：資料分散、人工追蹤、異常通常太晚才被發現。</p>
+            <p id="aiInsight">正在整理 AI 建議...</p>
+          </div>
+          <div class="risk-bars" id="riskBars"></div>
+        </article>
+      </section>
+
+      <section class="control-grid lower">
+        <article class="panel form-panel">
+          <div class="panel-heading">
+            <div>
+              <span>新增資料</span>
+              <h2>新增 IT 事件</h2>
+            </div>
+          </div>
+          <form class="task-form" id="taskForm">
+            <label>項目名稱<input name="title" required placeholder="輸入要追蹤的工作項目" /></label>
+            <label>對象<input name="target" required placeholder="例如：系統 A / 客戶 A / 據點 A" /></label>
+            <label>風險類型
+              <select name="risk">
+                <option value="資料庫效能瓶頸難以定位">資料庫效能瓶頸難以定位</option><option value="儲存空間快速增長失控">儲存空間快速增長失控</option><option value="未授權存取風險">未授權存取風險</option><option value="資料庫版本/修補管理紊亂">資料庫版本/修補管理紊亂</option>
+              </select>
+            </label>
+            <button type="submit">新增到系統</button>
+          </form>
+          <div class="quick-actions">
+            <button type="button" data-action="run-ai">AI 重新分析</button>
+            <button type="button" data-action="simulate">模擬主管審核</button>
+            <button type="button" data-action="reset">還原範例資料</button>
+          </div>
+        </article>
+
+        <article class="panel records-panel">
+          <div class="panel-heading">
+            <div>
+              <span>資料清單</span>
+              <h2>即時案件與操作</h2>
+            </div>
+            <b id="recordCount">--</b>
+          </div>
+          <div class="record-list" id="taskList"></div>
+        </article>
+      </section>
+
+      <section class="panel log-panel">
+        <div class="panel-heading">
+          <div>
+            <span>營運紀錄</span>
+            <h2>系統操作 Log</h2>
+          </div>
+          <b>Audit Trail</b>
+        </div>
+        <div class="log-list" id="logList"></div>
+      </section>
+    </section>
+  </main>
+  <script>
+    window.DEMO_CONFIG = {"id":1373,"caseNo":"SM-273","name":"資料庫管理指揮台","originalName":"資料庫管理平台（DBA Platform）","category":"智慧製造｜IT管理","description":"集中管理MES、ERP等系統背後的資料庫效能、備份與安全，確保資料庫穩定運作。","repoName":"jvision-smart-mfg-273-dba-platform","spec":{"functions":["資料庫效能監控與調校","慢查詢分析與索引建議","容量與儲存空間管理","資料庫備份還原整合","存取權限與稽核日誌","高可用性(HA)/叢集管理"],"departments":"資訊部、DBA團隊、應用系統開發團隊","pains":["資料庫效能瓶頸難以定位","儲存空間快速增長失控","未授權存取風險","資料庫版本/修補管理紊亂"],"workflow":"資料庫納管→效能基準建立→持續監控與告警→問題調校優化→定期備份驗證→版本修補排程","ai":["慢查詢自動優化建議","容量成長預測與告警"],"integrations":"APM、備份與DR系統、IAM、ITSM、雲端資源管理平台","kpi":"資料庫可用率、平均查詢響應時間、儲存使用率、備份還原成功率","products":"Oracle Enterprise Manager、SolarWinds Database Performance Analyzer、Quest Toad、Percona Monitoring and Management"},"profile":{"object":"IT 事件","owner":"IT 主管","stages":["待處理","處理中","待驗證","已關閉"],"risks":["資料庫效能瓶頸難以定位","儲存空間快速增長失控","未授權存取風險","資料庫版本/修補管理紊亂"],"fields":["對象","期限","風險","負責人"]},"records":[{"id":"1373-1","title":"IT 事件 1","target":"資料庫管理 · 對象 1","owner":"IT 主管","due":"D+8","risk":"資料庫效能瓶頸難以定位","stage":"待處理","score":63,"priority":"medium","done":false},{"id":"1373-2","title":"IT 事件 2","target":"資料庫管理 · 對象 2","owner":"Mia","due":"D+11","risk":"儲存空間快速增長失控","stage":"處理中","score":74,"priority":"medium","done":false},{"id":"1373-3","title":"IT 事件 3","target":"資料庫管理 · 對象 3","owner":"Leo","due":"D+14","risk":"未授權存取風險","stage":"待驗證","score":85,"priority":"high","done":false},{"id":"1373-4","title":"IT 事件 4","target":"資料庫管理 · 對象 4","owner":"IT 主管","due":"D+3","risk":"資料庫版本/修補管理紊亂","stage":"已關閉","score":96,"priority":"high","done":true},{"id":"1373-5","title":"IT 事件 5","target":"資料庫管理 · 對象 5","owner":"Kevin","due":"D+6","risk":"資料庫效能瓶頸難以定位","stage":"待處理","score":52,"priority":"low","done":false},{"id":"1373-6","title":"IT 事件 6","target":"資料庫管理 · 對象 6","owner":"Aken","due":"D+9","risk":"儲存空間快速增長失控","stage":"處理中","score":63,"priority":"medium","done":false},{"id":"1373-7","title":"IT 事件 7","target":"資料庫管理 · 對象 7","owner":"IT 主管","due":"D+12","risk":"未授權存取風險","stage":"待驗證","score":74,"priority":"medium","done":false},{"id":"1373-8","title":"IT 事件 8","target":"資料庫管理 · 對象 8","owner":"Leo","due":"D+1","risk":"資料庫版本/修補管理紊亂","stage":"已關閉","score":85,"priority":"high","done":true}],"modules":[{"title":"AI 摘要","text":"慢查詢自動優化建議"},{"title":"流程追蹤","text":"資料庫納管→效能基準建立→持續監控與告警→問題調校優化→定期備份驗證→版本修補排程"},{"title":"痛點改善","text":"資料庫效能瓶頸難以定位"},{"title":"KPI 監控","text":"資料庫可用率、平均查詢響應時間、儲存使用率、備份還原成功率"}]};
+    window.SYSTEM_PRESET = {"modules":["IT 總覽","服務台","資安/權限","AI 維運分析"],"primaryAction":"產生 IT 建議","formTitle":"新增 IT 事件","searchPlaceholder":"搜尋系統、帳號、事件、設備或服務","financeLabel":"服務風險","unit":"系統","accentWord":"IT Ops OS"};
+  </script>
+  <script src="./app.js?v=industry-system-framework-sample-20260720"></script>
+</body>
+</html>
